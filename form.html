@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Form</title>
+    <script src="jquery-1.10.2.js">
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#convert").click(function (e) {
+                e.preventDefault();
+
+              var obj={};
+                obj.name = $("#name").val();
+                obj.text = $("#text").val();
+                var Jobj= JSON.stringify(obj);
+    
+                $.get(
+                        "convert.php",
+                        {
+                            myData: Jobj
+                        },
+                        function(data) {
+                            if(data != "Error"){
+                            $("#convertedText").html(data);
+                            }
+                            else { $("#convertedText").html("Error");}
+                        }
+                    );
+            });
+        });
+    
+    </script>
+</head>
+
+<body>
+
+    <form>
+        <fieldset>
+            <legend>CONVERT TEXT TO MORSE CODE</legend>
+            <p>
+                <label for="name">You name:</label><br>
+                <input type="name" name="name" id="name">
+            </p>
+            <p>
+                <label for="text">Text you wish to convert: </label><br>
+                <textarea id="text" name="text" rows="10" cols="50"></textarea>
+            </p>
+            <p>
+                <label for="convertedText">Converted text:</label><br>
+                <textarea readonly id="convertedText" name="convertedText" rows="10" cols="50"></textarea>
+            </p>
+            <input id="convert" type="submit" name="convert" value="Convert">
+        </fieldset>
+    </form>
+
+</body>
+
+</html>
